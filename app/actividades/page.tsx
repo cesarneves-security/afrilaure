@@ -1,10 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { X } from "lucide-react"
+import dynamic from "next/dynamic"
+
+const ActivityModal = dynamic(() => import("@/components/activity-modal"), {
+  ssr: false,
+})
 
 type ActivityCategory = "desporto" | "cultural" | "academica" | "social"
 
@@ -109,11 +113,6 @@ const categoryColors: Record<ActivityCategory, string> = {
 export default function ActivitiesPage() {
   const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | null>(null)
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   const filteredActivities =
     selectedCategory === null ? activities : activities.filter((a) => a.category === selectedCategory)
@@ -194,42 +193,12 @@ export default function ActivitiesPage() {
       </div>
 
       {/* Modal */}
-      {isMounted && selectedActivity && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="aspect-video overflow-hidden relative">
-              <img
-                src={selectedActivity.image}
-                alt={selectedActivity.title}
-                className="w-full h-full object-cover"
-              />
-              <button
-                onClick={() => setSelectedActivity(null)}
-                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-6">
-              <div className="mb-3">
-                <Badge className={categoryColors[selectedActivity.category]}>
-                  {categoryLabels[selectedActivity.category]}
-                </Badge>
-              </div>
-              <h2 className="text-2xl font-bold mb-2">{selectedActivity.title}</h2>
-              <p className="text-muted-foreground mb-4">{selectedActivity.description}</p>
-              {selectedActivity.date && (
-                <p className="text-sm text-foreground/60 mb-4">
-                  <strong>Frequência:</strong> {selectedActivity.date}
-                </p>
-              )}
-              <Button onClick={() => setSelectedActivity(null)} variant="outline" className="w-full">
-                Fechar
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ActivityModal
+        activity={selectedActivity}
+        categoryLabels={categoryLabels}
+        categoryColors={categoryColors}
+        onClose={() => setSelectedActivity(null)}
+      />
     </div>
   )
 }
