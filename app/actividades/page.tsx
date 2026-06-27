@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -109,6 +109,11 @@ const categoryColors: Record<ActivityCategory, string> = {
 export default function ActivitiesPage() {
   const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | null>(null)
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const filteredActivities =
     selectedCategory === null ? activities : activities.filter((a) => a.category === selectedCategory)
@@ -189,7 +194,7 @@ export default function ActivitiesPage() {
       </div>
 
       {/* Modal */}
-      {selectedActivity && (
+      {isMounted && selectedActivity && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="aspect-video overflow-hidden relative">
