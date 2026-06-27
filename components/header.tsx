@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
@@ -51,6 +52,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/actividades" className="text-foreground hover:text-primary transition-colors">
+              Actividades
+            </Link>
             <button
               onClick={() => scrollToSection("precos")}
               className="text-foreground hover:text-primary transition-colors"
@@ -99,6 +103,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/actividades" className="text-left text-foreground hover:text-primary transition-colors">
+              Actividades
+            </Link>
             <button
               onClick={() => scrollToSection("precos")}
               className="text-left text-foreground hover:text-primary transition-colors"
