@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
@@ -20,8 +21,14 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
+            <div className="w-12 h-12 flex items-center justify-center">
+              <Image
+                src="/logo-afrilaure.png"
+                alt="Colégio Afrilaure Logo"
+                width={48}
+                height={48}
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold text-primary">Afrilaure</h1>
