@@ -8,8 +8,14 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Afrilaure - Escola Técnica de Excelência",
-  description: "Escola Técnica Afrilaure - Formação em Informática e Electrónica em Viana, Angola",
-  generator: "v0.app",
+  description:
+    "Escola Técnica Afrilaure - Formação em Informática e Electrónica em Viana, Angola",
+  generator: "Cesár Neves",
+
+  icons: {
+    icon: "/logotipoafrilaure.png",
+    apple: "/logotipoafrilaure.png"
+  },
 }
 
 export default function RootLayout({
