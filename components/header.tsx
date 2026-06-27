@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, GraduationCap } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,8 +22,13 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-primary">AFRILAURE</span>
+            <Image
+              src="/logotipoafrilaure.png"
+              alt="Colégio Afrilaure Logo"
+              width={50}
+              height={50}
+              className="h-8 w-8 object-contain"
+            />
           </div>
 
           {/* Desktop Navigation */}
@@ -44,6 +51,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/actividades" className="text-foreground hover:text-primary transition-colors">
+              Actividades
+            </Link>
             <button
               onClick={() => scrollToSection("precos")}
               className="text-foreground hover:text-primary transition-colors"
@@ -92,6 +102,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/actividades" className="text-left text-foreground hover:text-primary transition-colors">
+              Actividades
+            </Link>
             <button
               onClick={() => scrollToSection("precos")}
               className="text-left text-foreground hover:text-primary transition-colors"

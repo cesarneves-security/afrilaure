@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { Heart, Activity, CheckCircle, Laptop, Users, Calculator, Radio, Pill, Stethoscope, Smile } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
@@ -8,8 +9,9 @@ export function Courses() {
     {
       icon: Heart,
       title: "Enfermagem",
+      slug: "enfermagem",
       duration: "3 Anos",
-      classLevel: "11ª à 13ª Classe",
+      classLevel: "10ª à 13ª Classe",
       description:
         "Formação completa em cuidados de enfermagem, preparando profissionais qualificados para atuar em hospitais, clínicas e centros de saúde.",
       topics: [
@@ -24,8 +26,9 @@ export function Courses() {
     {
       icon: Activity,
       title: "Análises Clínicas",
+      slug: "analises-clinicas",
       duration: "3 Anos",
-      classLevel: "11ª à 13ª Classe",
+      classLevel: "10ª à 13ª Classe",
       description: "Formação técnica em análises laboratoriais, microbiologia e diagnóstico clínico.",
       topics: [
         "Hematologia",
@@ -38,37 +41,40 @@ export function Courses() {
     },
     {
       icon: Pill,
-      title: "Farmácia Radiológica",
+      title: "Farmácia",
+      slug: "farmacia",
       duration: "3 Anos",
       description:
-        "Formação em farmácia e técnicas radiológicas, preparando profissionais para atuar em farmácias e serviços de imagiologia.",
+        "Formação em gestão farmacêutica e medicamentos, preparando profissionais para atuar em farmácias e serviços de saúde.",
       topics: [
         "Farmacologia Aplicada",
         "Gestão Farmacêutica",
-        "Radiologia Básica",
-        "Técnicas de Imagiologia",
-        "Proteção Radiológica",
-        "Anatomia Radiológica",
+        "Medicamentos",
+        "Boas Práticas Farmacêuticas",
+        "Legislação Farmacêutica",
+        "Atendimento ao Cliente",
       ],
     },
     {
       icon: Stethoscope,
       title: "Fisioterapia",
+      slug: "fisioterapia",
       duration: "3 Anos",
       description:
         "Formação em técnicas de reabilitação física e tratamento de lesões, preparando profissionais para promover a saúde e bem-estar.",
       topics: [
         "Anatomia Funcional",
         "Cinesiologia",
-        "Técnicas de Massagem",
+        "Técnicas Manuais",
         "Reabilitação Física",
         "Fisioterapia Desportiva",
-        "Terapias Manuais",
+        "Terapias Especializadas",
       ],
     },
     {
       icon: Smile,
       title: "Estomatologia",
+      slug: "estomatologia",
       duration: "3 Anos",
       description:
         "Formação em saúde oral e técnicas odontológicas, preparando profissionais para atuar em clínicas dentárias e centros de saúde.",
@@ -84,6 +90,7 @@ export function Courses() {
     {
       icon: Laptop,
       title: "Informática",
+      slug: "tecnico-informatica",
       duration: "3 Anos",
       description: "Formação em tecnologias da informação, programação e gestão de sistemas computacionais.",
       topics: [
@@ -98,6 +105,7 @@ export function Courses() {
     {
       icon: Users,
       title: "Recursos Humanos",
+      slug: "gestao-recursos-humanos",
       duration: "3 Anos",
       description: "Formação em gestão de pessoas, recrutamento e desenvolvimento organizacional.",
       topics: [
@@ -110,31 +118,33 @@ export function Courses() {
       ],
     },
     {
-      icon: Calculator,
-      title: "Contabilidade e Gestão",
+      icon: Radio,
+      title: "Electrónica",
+      slug: "tecnico-electronica",
       duration: "3 Anos",
-      description: "Formação em contabilidade, finanças e gestão empresarial para o mercado angolano.",
+      description: "Formação técnica em sistemas electrónicos, automação e instalações eléctricas.",
       topics: [
-        "Contabilidade Geral",
-        "Contabilidade de Custos",
-        "Gestão Financeira",
-        "Fiscalidade",
-        "Auditoria",
-        "Gestão Empresarial",
+        "Circuitos Electrónicos",
+        "Automação Industrial",
+        "Instalações Eléctricas",
+        "Electrónica Digital",
+        "Manutenção de Equipamentos",
+        "Segurança Profissional",
       ],
     },
     {
       icon: Radio,
-      title: "Electrónica e Telecomunicação",
+      title: "Radiologia",
+      slug: "radiologia",
       duration: "3 Anos",
-      description: "Formação técnica em sistemas electrónicos, telecomunicações e redes de comunicação.",
+      description: "Formação especializada em técnicas de imagiologia médica e diagnóstico por imagem.",
       topics: [
-        "Circuitos Electrónicos",
-        "Sistemas de Telecomunicações",
-        "Redes de Comunicação",
-        "Electrónica Digital",
-        "Manutenção de Equipamentos",
-        "Tecnologias Wireless",
+        "Física das Radiações",
+        "Técnicas Radiográficas",
+        "Ecografia",
+        "Ressonância Magnética",
+        "Protecção Radiológica",
+        "Anatomia Radiológica",
       ],
     },
   ]
@@ -190,8 +200,10 @@ export function Courses() {
                     ))}
                   </ul>
                 </div>
-                <Button className="w-full mt-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                  Saiba Mais
+                <Button asChild className="w-full mt-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                  <Link href={`/cursos/${course.slug}`}>
+                    Saiba Mais
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
