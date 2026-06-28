@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
 import { Courses } from "@/components/courses"
+import { EnsinoGeralSection } from "@/components/ensino-geral-section"
 import { Documents } from "@/components/documents"
 import { Pricing } from "@/components/pricing"
 import { Transport } from "@/components/transport"
@@ -18,6 +19,7 @@ export default function Home() {
       <Hero />
       <About />
       <Courses />
+      <EnsinoGeralSection />
       <Documents />
       <Pricing />
       <Transport />

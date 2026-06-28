@@ -104,7 +104,7 @@ export function Courses() {
     },
     {
       icon: Users,
-      title: "Recursos Humanos",
+      title: "Gestão de Recursos Humanos",
       slug: "gestao-recursos-humanos",
       duration: "3 Anos",
       description: "Formação em gestão de pessoas, recrutamento e desenvolvimento organizacional.",
@@ -145,6 +145,22 @@ export function Courses() {
         "Ressonância Magnética",
         "Protecção Radiológica",
         "Anatomia Radiológica",
+      ],
+    },
+    {
+      icon: Calculator,
+      title: "Contabilidade e Gestão",
+      slug: "contabilidade-e-gestao",
+      duration: "3 Anos",
+      description:
+        "Formação em contabilidade, finanças e gestão empresarial, preparando profissionais para a administração e controlo financeiro das organizações.",
+      topics: [
+        "Contabilidade Geral",
+        "Contabilidade Analítica",
+        "Gestão Financeira",
+        "Fiscalidade",
+        "Gestão de Empresas",
+        "Economia",
       ],
     },
   ]

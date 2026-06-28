@@ -20,16 +20,16 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logotipoafrilaure.png"
               alt="Colégio Afrilaure Logo"
-              width={50}
-              height={50}
-              className="h-8 w-8 object-contain"
+              width={120}
+              height={120}
+              className="h-14 w-14 object-contain"
             />
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
@@ -51,6 +51,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/ensino-geral" className="text-foreground hover:text-primary transition-colors">
+              Ensino Geral
+            </Link>
             <Link href="/actividades" className="text-foreground hover:text-primary transition-colors">
               Actividades
             </Link>
@@ -102,6 +105,9 @@ export function Header() {
             >
               Cursos
             </button>
+            <Link href="/ensino-geral" className="text-left text-foreground hover:text-primary transition-colors">
+              Ensino Geral
+            </Link>
             <Link href="/actividades" className="text-left text-foreground hover:text-primary transition-colors">
               Actividades
             </Link>
