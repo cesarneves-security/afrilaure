@@ -1,40 +1,100 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Palmtree, Trophy, Music, Microscope, Ship, Camera } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Shirt, Music, Landmark, Trophy, Ship, Trees, Waves } from "lucide-react"
 
 export function Activities() {
   const activities = [
-    { icon: Camera, title: "Visitas a Locais Históricos", description: "Conhecer a história de Angola" },
+    { icon: Landmark, title: "Visitas a Locais Históricos", description: "Conhecer a história de Angola" },
     { icon: Trophy, title: "Concurso Quem Sabe... Sabe", description: "Competições académicas" },
     { icon: Music, title: "Informática e Música", description: "Aulas extracurriculares" },
-    { icon: Microscope, title: "Jornadas Científicas", description: "Eventos científicos e educativos" },
+    { icon: Landmark, title: "Jornadas Científicas", description: "Eventos educativos" },
     { icon: Ship, title: "Passeio de Comboio e Barco", description: "Experiências únicas" },
-    { icon: Palmtree, title: "Safari - Parque da Kissama", description: "Visita ao parque nacional" },
+    { icon: Trees, title: "Safari - Parque da Kissama", description: "Contacto com a natureza" },
+    { icon: Waves, title: "Piscina", description: "Actividades aquáticas" },
+  ]
+
+  const uniforms = [
+    { item: "Bata", price: "12.000,00 Kz" },
+    { item: "Uniforme de Ed. Física", price: "9.000,00 Kz" },
   ]
 
   return (
-    <section id="atividades" className="py-16 md:py-24 bg-muted">
+    <section id="actividades" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Atividades Extra-Escolares</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Proporcionamos experiências enriquecedoras além da sala de aula
-          </p>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Actividades e Uniformes</h2>
+          <p className="text-lg text-foreground max-w-2xl mx-auto">Experiências educativas além da sala de aula</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {activities.map((activity, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center text-center gap-3">
-                  <div className="p-4 bg-primary/10 rounded-full">
-                    <activity.icon className="h-8 w-8 text-primary" />
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl text-primary">Actividades Extra-Escolares</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {activities.map((activity, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-4 p-4 bg-card rounded-lg hover:shadow-md transition-shadow"
+                  >
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <activity.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">{activity.title}</h3>
+                      <p className="text-sm text-muted-foreground">{activity.description}</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-lg">{activity.title}</h3>
-                  <p className="text-sm text-muted-foreground">{activity.description}</p>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Shirt className="w-6 h-6 text-secondary" />
+                  <CardTitle className="text-2xl text-primary">Uniformes</CardTitle>
                 </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-foreground mb-6">
+                  O uso do uniforme é de <strong>carácter obrigatório</strong>. Os alunos devem adquiri-lo no acto de
+                  matrícula.
+                </p>
+                <div className="space-y-4">
+                  {uniforms.map((uniform, index) => (
+                    <div key={index} className="flex justify-between items-center p-4 bg-secondary/10 rounded-lg">
+                      <span className="font-semibold text-foreground">{uniform.item}</span>
+                      <span className="text-xl font-bold text-secondary">{uniform.price}</span>
+                    </div>
+                  ))}
+                </div>
+                <Card className="mt-6 bg-destructive/10 border-destructive/20">
+                  <CardContent className="pt-6">
+                    <p className="text-sm text-foreground">
+                      <strong>Importante:</strong> Alunos que se apresentarem mal uniformizados (bata suja ou manchada)
+                      serão impedidos de assistir às aulas.
+                    </p>
+                  </CardContent>
+                </Card>
               </CardContent>
             </Card>
-          ))}
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl text-primary">Localização</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-foreground leading-relaxed">
+                  Depois da Comarca de Viana, por detrás às bombas de combustíveis dos Montes Claros
+                  <br />
+                  <strong>Rua 17 de Setembro nº 35, zona 10</strong>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>

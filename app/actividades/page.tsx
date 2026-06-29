@@ -1,204 +1,239 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { useState, useMemo, Suspense } from "react"
+import Image from "next/image"
+import { Search, Filter } from "lucide-react"
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import dynamic from "next/dynamic"
+import { activitiesData, sectionLabels, sectionColors, type ActivitySection, type ActivityMedia } from "@/lib/activities-data"
+import { GallerySkeleton } from "@/components/gallery-skeleton"
 
-const ActivityModal = dynamic(() => import("@/components/activity-modal"), {
+const ActivitiesLightbox = dynamic(() => import("@/components/activities-lightbox").then((mod) => ({ default: mod.ActivitiesLightbox })), {
   ssr: false,
+  loading: () => <div />,
 })
 
-type ActivityCategory = "desporto" | "cultural" | "academica" | "social"
+const sections: ActivitySection[] = ["defesas", "eventos", "festivais", "visitas", "formaturas"]
 
-interface Activity {
-  id: string
-  title: string
-  category: ActivityCategory
-  description: string
-  image: string
-  date?: string
-}
-
-const activities: Activity[] = [
-  {
-    id: "1",
-    title: "Torneio de Futebol Escolar",
-    category: "desporto",
-    description: "Competição anual entre as turmas, promovendo o espírito de equipa e saúde física.",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&h=400&fit=crop",
-    date: "Trimestral",
-  },
-  {
-    id: "2",
-    title: "Festa da Cultura Africana",
-    category: "cultural",
-    description: "Celebração das tradições e património cultural da Africa, com música e dança.",
-    image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&h=400&fit=crop",
-    date: "Anual",
-  },
-  {
-    id: "3",
-    title: "Olimpíadas de Matemática",
-    category: "academica",
-    description: "Desafio matemático entre alunos, estimulando o pensamento lógico e criativo.",
-    image: "https://images.unsplash.com/photo-1596521967514-2209e3cc8000?w=500&h=400&fit=crop",
-    date: "Semestral",
-  },
-  {
-    id: "4",
-    title: "Desfile de Encerramento do Ano",
-    category: "social",
-    description: "Grande celebração do término do ano lectivo com famílias e comunidade.",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=400&fit=crop",
-    date: "Anual",
-  },
-  {
-    id: "5",
-    title: "Campeonato de Voleibol",
-    category: "desporto",
-    description: "Competição de voleibol entre diferentes níveis de ensino da escola.",
-    image: "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=500&h=400&fit=crop",
-    date: "Trimestral",
-  },
-  {
-    id: "6",
-    title: "Concurso de Ensaios Literários",
-    category: "cultural",
-    description: "Promoção da escrita criativa com prémios para os melhores trabalhos.",
-    image: "https://images.unsplash.com/photo-1507842217343-583f20270319?w=500&h=400&fit=crop",
-    date: "Semestral",
-  },
-  {
-    id: "7",
-    title: "Feira de Ciências",
-    category: "academica",
-    description: "Apresentação de projectos científicos e experimentações práticas dos alunos.",
-    image: "https://images.unsplash.com/photo-1518611505868-48510c2a735f?w=500&h=400&fit=crop",
-    date: "Anual",
-  },
-  {
-    id: "8",
-    title: "Jornada de Limpeza da Comunidade",
-    category: "social",
-    description: "Actividade de responsabilidade social com participação de alunos e staff.",
-    image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&h=400&fit=crop",
-    date: "Trimestral",
-  },
-  {
-    id: "9",
-    title: "Torneio de Basquetebol",
-    category: "desporto",
-    description: "Competição de basquetebol promovendo desenvolvimento físico e trabalho em equipa.",
-    image: "https://images.unsplash.com/photo-1546519638-68711109d298?w=500&h=400&fit=crop",
-    date: "Trimestral",
-  },
-]
-
-const categoryLabels: Record<ActivityCategory, string> = {
-  desporto: "Desporto",
-  cultural: "Cultural",
-  academica: "Académica",
-  social: "Social",
-}
-
-const categoryColors: Record<ActivityCategory, string> = {
-  desporto: "bg-blue-100 text-blue-700",
-  cultural: "bg-purple-100 text-purple-700",
-  academica: "bg-green-100 text-green-700",
-  social: "bg-amber-100 text-amber-700",
-}
+const allCategories = ["todos", ...sections] as const
+type FilterCategory = (typeof allCategories)[number]
 
 export default function ActivitiesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | null>(null)
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("todos")
+  const [selectedMedia, setSelectedMedia] = useState<ActivityMedia | null>(null)
+  const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
 
-  const filteredActivities =
-    selectedCategory === null ? activities : activities.filter((a) => a.category === selectedCategory)
+  // Filter and search
+  const filteredMedia = useMemo(() => {
+    let result = activitiesData
 
-  const categories: ActivityCategory[] = ["desporto", "cultural", "academica", "social"]
+    // Category filter
+    if (selectedCategory !== "todos") {
+      result = result.filter((item) => item.category === selectedCategory)
+    }
+
+    // Search filter
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase()
+      result = result.filter(
+        (item) =>
+          item.title.toLowerCase().includes(term) ||
+          item.description?.toLowerCase().includes(term) ||
+          item.category.toLowerCase().includes(term),
+      )
+    }
+
+    return result
+  }, [searchTerm, selectedCategory])
+
+  const handleMediaClick = (media: ActivityMedia) => {
+    setSelectedMedia(media)
+    setSelectedMediaIndex(filteredMedia.indexOf(media))
+  }
+
+  const handleLightboxClose = () => {
+    setSelectedMedia(null)
+  }
 
   return (
-    <div className="min-h-screen pt-20 pb-12 bg-background">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 text-white py-12 mb-12">
+    <div className="min-h-screen bg-background pt-20 pb-16">
+      {/* Hero Banner */}
+      <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white py-16 mb-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">Actividades e Eventos</h1>
-          <p className="text-lg text-white/90 max-w-2xl">
-            Conheça as actividades extracurriculares e eventos que tornam a vida escolar em Afrilaure mais dinâmica e
-            enriquecedora
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-balance">Galeria de Actividades</h1>
+          <p className="text-xl text-white/90 max-w-2xl text-pretty">
+            Descubra os eventos, festivais, defesas e momentos especiais que fazem parte da vida em Afrilaure. Explore nossa galeria completa de actividades e celebrações.
           </p>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 max-w-6xl">
-        {/* Category Filter */}
+      <div className="container mx-auto px-4 max-w-7xl">
+        {/* Search Bar */}
+        <div className="mb-10">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+            <Input
+              type="text"
+              placeholder="Procure por evento, título, descrição ou categoria..."
+              className="pl-12 py-6 text-base rounded-full border-2 border-border focus:border-primary transition-colors"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          {searchTerm && filteredMedia.length === 0 && (
+            <p className="text-center text-muted-foreground mt-4">
+              Nenhuma actividade encontrada com "{searchTerm}". Tente outro termo.
+            </p>
+          )}
+        </div>
+
+        {/* Filter Buttons */}
         <div className="mb-12">
-          <h2 className="text-xl font-semibold mb-6">Filtrar por Categoria</h2>
+          <div className="flex items-center gap-3 mb-4">
+            <Filter className="w-5 h-5 text-foreground" />
+            <h2 className="text-lg font-semibold">Filtrar por Categoria</h2>
+          </div>
           <div className="flex flex-wrap gap-3">
             <Button
-              variant={selectedCategory === null ? "default" : "outline"}
-              onClick={() => setSelectedCategory(null)}
+              variant={selectedCategory === "todos" ? "default" : "outline"}
+              onClick={() => setSelectedCategory("todos")}
               className="rounded-full"
+              size="lg"
             >
-              Todas
+              Todas as Actividades
             </Button>
-            {categories.map((category) => (
+            {sections.map((section) => (
               <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
+                key={section}
+                variant={selectedCategory === section ? "default" : "outline"}
+                onClick={() => setSelectedCategory(section)}
                 className="rounded-full"
+                size="lg"
               >
-                {categoryLabels[category]}
+                {sectionLabels[section]}
               </Button>
             ))}
           </div>
         </div>
 
-        {/* Activities Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredActivities.map((activity) => (
-            <Card
-              key={activity.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => setSelectedActivity(activity)}
-            >
-              <div className="aspect-video overflow-hidden bg-muted">
-                <img
-                  src={activity.image}
-                  alt={activity.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <CardContent className="pt-6">
-                <div className="mb-2">
-                  <Badge className={categoryColors[activity.category]}>{categoryLabels[activity.category]}</Badge>
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{activity.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{activity.description}</p>
-                {activity.date && <p className="text-xs text-foreground/60">Frequência: {activity.date}</p>}
-              </CardContent>
-            </Card>
-          ))}
+        {/* Results Info */}
+        <div className="mb-8">
+          <p className="text-muted-foreground">
+            Mostrando <span className="font-semibold text-foreground">{filteredMedia.length}</span> de{" "}
+            <span className="font-semibold text-foreground">{activitiesData.length}</span> actividades
+          </p>
         </div>
 
-        {filteredActivities.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">Nenhuma actividade encontrada nesta categoria.</p>
-          </div>
-        )}
+        {/* Gallery Sections */}
+        <Suspense fallback={<GallerySkeleton />}>
+          {filteredMedia.length > 0 ? (
+            <div className="space-y-16">
+              {/* When filtering by category, show flat grid */}
+              {selectedCategory !== "todos" ? (
+                <div>
+                  <h3 className="text-3xl font-bold mb-8 text-foreground">{sectionLabels[selectedCategory as ActivitySection]}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredMedia.map((media, index) => (
+                      <MediaCard
+                        key={media.id}
+                        media={media}
+                        onClick={() => handleMediaClick(media)}
+                        index={index}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                // When showing all, group by section
+                sections.map((section) => {
+                  const sectionMedia = filteredMedia.filter((m) => m.category === section)
+                  if (sectionMedia.length === 0) return null
+
+                  return (
+                    <div key={section}>
+                      <h3 className="text-3xl font-bold mb-8 text-foreground flex items-center gap-3">
+                        {sectionLabels[section]}
+                        <Badge className={`${sectionColors[section].bg} ${sectionColors[section].text}`}>
+                          {sectionMedia.length}
+                        </Badge>
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {sectionMedia.map((media) => (
+                          <MediaCard
+                            key={media.id}
+                            media={media}
+                            onClick={() => handleMediaClick(media)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-lg text-muted-foreground">Nenhuma actividade encontrada.</p>
+            </div>
+          )}
+        </Suspense>
       </div>
 
-      {/* Modal */}
-      <ActivityModal
-        activity={selectedActivity}
-        categoryLabels={categoryLabels}
-        categoryColors={categoryColors}
-        onClose={() => setSelectedActivity(null)}
-      />
+      {/* Lightbox Viewer */}
+      {selectedMedia && (
+        <ActivitiesLightbox media={filteredMedia} initialIndex={selectedMediaIndex} onClose={handleLightboxClose} />
+      )}
+    </div>
+  )
+}
+
+function MediaCard({ media, onClick, index = 0 }: { media: ActivityMedia; onClick: () => void; index?: number }) {
+  const [isLoading, setIsLoading] = useState(true)
+
+  return (
+    <div
+      onClick={onClick}
+      className="group cursor-pointer overflow-hidden rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+    >
+      {/* Image Container */}
+      <div className="relative aspect-video overflow-hidden bg-muted">
+        <img
+          src={media.thumbnail || media.url}
+          alt={media.altText}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          onLoad={() => setIsLoading(false)}
+        />
+
+        {/* Video Badge */}
+        {media.type === "video" && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors">
+            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:bg-white/100 transition-all">
+              <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+        )}
+
+        {/* Overlay with category */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <Badge className={`${sectionColors[media.category].bg} ${sectionColors[media.category].text} w-fit`}>
+            {sectionLabels[media.category]}
+          </Badge>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-4">
+        <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+          {media.title}
+        </h3>
+        {media.description && <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{media.description}</p>}
+        <p className="text-xs text-foreground/60">{media.date}</p>
+      </div>
     </div>
   )
 }
