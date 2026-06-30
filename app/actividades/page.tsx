@@ -1,14 +1,10 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import dynamic from "next/dynamic"
+import MediaLightbox from "@/components/media-lightbox"
 import ActivitySearchFilter from "@/components/activity-search-filter"
 import ActivitySection from "@/components/activity-section"
 import type { MediaItem } from "@/components/media-lightbox"
-
-const MediaLightbox = dynamic(() => import("@/components/media-lightbox"), {
-  ssr: false,
-})
 
 // Extended media data with all items for each section
 const activitySections = [
