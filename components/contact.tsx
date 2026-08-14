@@ -28,19 +28,18 @@ export function Contact() {
     {
       icon: MapPin,
       title: "Localização",
-      content: "Rua 17 de Setembro nº 35, Zona 10",
-      content2: "Depois da Comarca de Viana",
-      content3: "Por detrás às bombas de combustíveis de Montes Claros",
+      content: "Depois da Comarca de Viana, por detrás das bombas de combustíveis de Montes Claros.",
+      content2: "Rua 17 de Setembro nº 35, Zona 10.",
     },
     {
       icon: Phone,
       title: "Contactos Telefónicos - 2026/2027",
       items: [
-        { label: "Subdirectora Pedagógica", number: "931 464 700" },
-        { label: "Coordenador GIVA", number: "926 110 910" },
-        { label: "Subdirector Pedagógico", number: "923 536 224" },
-        { label: "Coordenador Ensino Primário e I Ciclo", number: "934 070 756" },
-        { label: "Subdireção Administrativa", number: "923 525 994" },
+        { label: "Ensino Geral/Técnico — Subdirector Pedagógico", number: "923 536 224" },
+        { label: "Ensino Geral/Técnico — Coordenador Ensino Primário e I Ciclo", number: "934 070 756" },
+        { label: "Saúde — Subdirectora Pedagógica", number: "931 46 47 00" },
+        { label: "Saúde — Coordenador do Giva", number: "9261 109 10" },
+        { label: "Subdireção Administrativa", number: "923 52 59 94" },
       ],
     },
     {
