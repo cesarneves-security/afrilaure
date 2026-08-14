@@ -14,6 +14,7 @@ interface ActivitySectionProps {
   media: MediaItem[]
   onMediaClick: (index: number) => void
   isExpanded?: boolean
+  previewLimit?: number
 }
 
 export default function ActivitySection({
@@ -24,8 +25,12 @@ export default function ActivitySection({
   media,
   onMediaClick,
   isExpanded: initialExpanded = true,
+  previewLimit,
 }: ActivitySectionProps) {
   const [isExpanded, setIsExpanded] = useState(initialExpanded)
+  const [showAllMedia, setShowAllMedia] = useState(false)
+  const visibleMedia = previewLimit && !showAllMedia ? media.slice(0, previewLimit) : media
+  const hasHiddenMedia = Boolean(previewLimit && media.length > previewLimit)
 
   if (!media.length) return null
 
@@ -74,7 +79,7 @@ export default function ActivitySection({
       {/* Gallery Grid */}
       {isExpanded && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 animate-in fade-in duration-300">
-          {media.map((item, index) => (
+          {visibleMedia.map((item, index) => (
             <div
               key={item.id}
               className="group relative overflow-hidden rounded-lg aspect-square bg-muted cursor-pointer"
@@ -120,6 +125,19 @@ export default function ActivitySection({
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {isExpanded && hasHiddenMedia && (
+        <div className="flex justify-center mt-6">
+          <Button
+            variant="outline"
+            onClick={() => setShowAllMedia(!showAllMedia)}
+            aria-expanded={showAllMedia}
+          >
+            {showAllMedia ? "Ver menos" : `Ver mais (${media.length - (previewLimit ?? 0)} fotos)`}
+            {showAllMedia ? <ChevronUp data-icon="inline-end" /> : <ChevronDown data-icon="inline-end" />}
+          </Button>
         </div>
       )}
     </section>

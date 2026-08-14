@@ -200,6 +200,8 @@ const activitySections = [
       }
     ],
   },
+  /* Actividades adicionais removidas conforme solicitado. */
+  /*
   {
     id: "festivais",
     title: "Festivais",
@@ -407,14 +409,12 @@ const activitySections = [
       },
     ],
   },
+  */
 ]
 
 const categories = [
   { id: "defesas", label: "Defesas de Cursos", icon: "🎓" },
   { id: "eventos", label: "Eventos Escolares", icon: "🎉" },
-  { id: "festivais", label: "Festivais", icon: "🎭" },
-  { id: "visitas", label: "Visitas de Estudo", icon: "🚌" },
-  { id: "formaturas", label: "Formaturas", icon: "👨‍🎓" },
 ]
 
 export default function ActivitiesPage() {
@@ -508,6 +508,7 @@ export default function ActivitiesPage() {
                 description={section.description}
                 icon={section.icon}
                 media={section.media}
+                previewLimit={section.id === "defesas" ? 4 : undefined}
                 onMediaClick={(mediaIndex) =>
                   handleMediaClick(sectionIndex, mediaIndex)
                 }
