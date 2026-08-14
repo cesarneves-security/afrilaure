@@ -11,12 +11,14 @@ import { Carousel } from "@/components/carousel"
 import { Testimonials } from "@/components/testimonials"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
+import { InternalCommunicationHighlight } from "@/components/internal-communication-highlight"
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Header />
       <Hero />
+      <InternalCommunicationHighlight />
       <About />
       <Courses />
       <EnsinoGeralSection />

@@ -1,160 +1,21 @@
+import { AlertCircle, Banknote, CalendarDays, Star } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Banknote, Calendar, Gift, AlertCircle } from "lucide-react"
+
+const general = [
+  ["Iniciação com Transporte", "20.000 Kz"], ["Iniciação sem Transporte", "16.000 Kz"],
+  ["1.ª e 2.ª Classes com Transporte", "27.000 Kz"], ["1.ª, 2.ª e 3.ª Classes", "18.630 Kz"],
+  ["4.ª, 5.ª e 6.ª Classes", "22.000 Kz"], ["7.ª, 8.ª e 9.ª Classes", "24.100 Kz"],
+]
+const technical = [["10.ª Classe — Todos os cursos", "26.720 Kz"], ["11.ª Classe — Todos os cursos", "30.700 Kz"], ["Estágio interno — 11.ª Classe", "4.300 Kz"], ["12.ª Classe — Todos os cursos", "32.050 Kz"], ["Estágio interno — 12.ª Classe", "4.950 Kz"], ["13.ª Classe — Todos os cursos", "34.700 Kz"], ["Estágio interno — 13.ª Classe", "5.300 Kz"]]
+const health = [["10.ª — Farmácia, Radiologia, Fisioterapia e Estomatologia", "16.000 Kz"], ["11.ª Classe", "29.400 Kz"], ["12.ª Classe", "32.050 Kz"], ["Estágio interno — 12.ª Classe", "2.950 Kz"], ["13.ª Classe", "34.700 Kz"], ["Estágio interno — 13.ª Classe", "3.300 Kz"]]
+
+function FeeGroup({ title, rows, multa }: { title: string; rows: string[][]; multa: string }) {
+  return <Card className="overflow-hidden"><CardHeader className="bg-primary text-primary-foreground"><CardTitle className="text-xl">{title}</CardTitle></CardHeader><CardContent className="p-0"><div className="divide-y divide-border">{rows.map(([label, value]) => <div key={label} className="flex items-center justify-between gap-4 px-5 py-4"><span className="text-sm leading-relaxed">{label}</span><span className="shrink-0 font-bold text-secondary">{value}</span></div>)}</div><div className="flex justify-between gap-4 bg-muted/50 px-5 py-4 text-sm"><span>Multa aplicável</span><strong>{multa}</strong></div></CardContent></Card>
+}
 
 export function Fees() {
-  const generalEducationFees = [
-    { level: "Iniciação", amount: "20.000,00 Kz" },
-    { level: "1ª, 2ª, 3ª e 4ª classes", amount: "25.000,00 Kz" },
-    { level: "5ª e 6ª classes", amount: "27.000,00 Kz" },
-    { level: "7ª, 8ª e 9ª classes", amount: "29.000,00 Kz" },
-  ]
-
-  const technicalFees = [
-    { grade: "10ª Classe", amount: "32.000,00 Kz" },
-    { grade: "11ª Classe", amount: "35.000,00 Kz" },
-    { grade: "12ª Classe", amount: "38.000,00 Kz" },
-    { grade: "13ª Classe", amount: "40.000,00 Kz" },
-  ]
-
-  const healthCourseFees = [
-    { grade: "10ª Classe (Farmácia, Radiologia, Fisioterapia, Estomatologia)", amount: "20.000,00 Kz" },
-    { grade: "11ª Classe", amount: "28.000,00 Kz" },
-    { grade: "12ª Classe", amount: "35.000,00 Kz" },
-    { grade: "13ª Classe", amount: "38.000,00 Kz" },
-  ]
-
-  return (
-    <section id="propinas" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Propinas e Pagamentos</h2>
-          <p className="text-lg text-foreground max-w-2xl mx-auto">
-            Ano Lectivo 2026/2027 - Valores mensais
-          </p>
-        </div>
-
-        {/* General Education */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-8 text-center">Ensino Geral Diurno</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
-            {generalEducationFees.map((fee, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Banknote className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-sm text-primary">{fee.level}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold text-secondary">{fee.amount}</p>
-                  <p className="text-xs text-muted-foreground mt-2">por mês</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Technical Education */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-8 text-center">Ensino Técnico Médio</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
-            {technicalFees.map((fee, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Banknote className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-sm text-primary">{fee.grade}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold text-secondary">{fee.amount}</p>
-                  <p className="text-xs text-muted-foreground mt-2">por mês</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Health Courses */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-8 text-center">Ensino Técnico Médio de Saúde</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
-            {healthCourseFees.map((fee, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Banknote className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xs text-primary">{fee.grade}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold text-secondary">{fee.amount}</p>
-                  <p className="text-xs text-muted-foreground mt-2">por mês</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Payment Rules */}
-        <div className="max-w-5xl mx-auto mt-16">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2 mb-2">
-                <Calendar className="w-6 h-6 text-primary" />
-                <CardTitle className="text-xl text-primary">Normas de Pagamento</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                <p className="text-foreground">
-                  Pagamento até ao dia <strong>10 de cada mês</strong> via banco ou multicaixa (Não transferências via express e BAI Directo)
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                <p className="text-foreground">
-                  O depósito deverá ser assinado com o <strong>nome do aluno em referência</strong>
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                <p className="text-foreground">
-                  Pagamento fora do prazo: <strong className="text-secondary">sujeito a multa fixada</strong>
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                <p className="text-foreground">
-                  Extravio do bordereau: <strong className="text-secondary">pagará 50% do valor da propina</strong>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="mt-6 space-y-4">
-            <Card className="bg-primary/5 border-primary/20">
-              <CardContent className="pt-6">
-                <p className="text-sm text-foreground">
-                  <strong>Prémio:</strong> O melhor aluno do quadro de honra de cada nível por trimestre terá direito a um estímulo.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-destructive/10 border-destructive/20">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="w-6 h-6 text-destructive flex-shrink-0 mt-1" />
-                  <p className="text-sm text-foreground">
-                    <strong>Atenção:</strong> Alunos com direito a desconto que atrasarem na liquidação da propina perderão este privilégio e sujeitar-se-ão ao pagamento normal acrescido da respectiva multa.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+  return <section id="propinas" className="bg-background py-20"><div className="container mx-auto px-4"><div className="mx-auto mb-12 max-w-3xl text-center"><p className="mb-3 font-mono text-sm font-semibold uppercase tracking-widest text-secondary">Ano lectivo 2026/2027</p><h2 className="mb-4 text-3xl font-bold text-primary md:text-4xl">Propinas e pagamentos</h2><p className="text-muted-foreground">Valores mensais, estágios e multas organizados por nível de ensino.</p></div><div className="grid gap-8 lg:grid-cols-3"><FeeGroup title="Ensino Geral" rows={general} multa="7.000 Kz (Iniciação à 6.ª) · 9.000 Kz (7.ª à 9.ª)" /><FeeGroup title="Ensino Técnico Médio" rows={technical} multa="10.000 Kz" /><FeeGroup title="Ensino Técnico Médio de Saúde" rows={health} multa="10.000 Kz" /></div><div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-3"><Card><CardContent className="flex gap-3 p-5"><CalendarDays className="text-primary" /><p className="text-sm">Fora de Julho e Agosto: acréscimo de <strong>10.000 Kz</strong> na matrícula/confirmação.</p></CardContent></Card><Card><CardContent className="flex gap-3 p-5"><Banknote className="text-primary" /><p className="text-sm">Pagamento até ao dia <strong>10 de cada mês</strong>, por banco ou Multicaixa.</p></CardContent></Card><Card><CardContent className="flex gap-3 p-5"><Star className="text-secondary" /><p className="text-sm">O melhor aluno do quadro de honra de cada nível, por trimestre, terá direito a um estímulo.</p></CardContent></Card></div><div className="mx-auto mt-6 max-w-5xl"><Card className="border-destructive/30 bg-destructive/10"><CardContent className="flex gap-3 p-5 text-sm"><AlertCircle className="shrink-0 text-destructive" /><p><strong>Atenção:</strong> Não são aceites transferências via Express e BAI Directo.</p></CardContent></Card></div></div></section>
 }
+
+export { FeeGroup }
+export const feeData = { general, technical, health }
