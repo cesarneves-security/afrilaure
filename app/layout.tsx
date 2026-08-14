@@ -7,9 +7,9 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Afrilaure - Escola Técnica de Excelência",
+  title: "Afrilaure | Ano Lectivo 2026/2027",
   description:
-    "Escola Técnica Afrilaure - Formação em Informática e Electrónica em Viana, Angola",
+    "Instituto Politécnico Privado Afrilaure — Ensino Geral, Ensino Técnico Médio e Ensino Técnico Médio de Saúde em Viana, Angola.",
   generator: "Cesár Neves",
 
   icons: {
@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt">
+    <html lang="pt" className="bg-background">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />

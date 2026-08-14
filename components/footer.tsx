@@ -86,7 +86,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-primary-foreground/80">
-          <p>&copy; 2025 Instituto Politécnico Privado AFRILAURE. Todos os direitos reservados.</p>
+          <p>&copy; 2026 Instituto Politécnico Privado AFRILAURE. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
