@@ -60,6 +60,9 @@ export function Header() {
             <Link href="/comunicados-interno" className="font-semibold text-primary hover:text-primary/80 transition-colors">
               Comunicados Interno
             </Link>
+            <Link href="/recrutamento" className="text-foreground hover:text-primary transition-colors">
+              Carreiras
+            </Link>
             <button
               onClick={() => scrollToSection("precos")}
               className="text-foreground hover:text-primary transition-colors"
@@ -113,6 +116,9 @@ export function Header() {
             </Link>
             <Link href="/comunicados-interno" className="text-left text-primary font-semibold hover:text-primary/80 transition-colors">
               Comunicados Interno
+            </Link>
+            <Link href="/recrutamento" className="text-left text-foreground hover:text-primary transition-colors">
+              Carreiras
             </Link>
             <Link href="/actividades" className="text-left text-foreground hover:text-primary transition-colors">
               Actividades
