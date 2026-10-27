@@ -39,6 +39,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/recrutamento" className="hover:text-primary-foreground transition-colors">
+                  Carreiras
+                </a>
+              </li>
+              <li>
                 <a href="#transportes" className="hover:text-primary-foreground transition-colors">
                   Transportes
                 </a>

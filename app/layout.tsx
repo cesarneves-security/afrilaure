@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Afrilaure | Ano Lectivo 2026/2027",
   description:
     "Instituto Politécnico Privado Afrilaure — Ensino Geral, Ensino Técnico Médio e Ensino Técnico Médio de Saúde em Viana, Angola.",
+  keywords: ["Afrilaure", "recrutamento", "carreiras", "educação", "Viana", "Angola"],
   generator: "Cesár Neves",
 
   icons: {
