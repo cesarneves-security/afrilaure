@@ -17,9 +17,10 @@ const opportunities = [
     title: "Professor de Eletrónica e Telecomunicações",
     category: "Docência",
     course: "Curso de Eletrónica e Telecomunicações",
-    description: "Recrutamento de um professor para assegurar duas disciplinas integradas no curso, com rigor técnico e capacidade pedagógica.",
-    status: "Aberta",
-    openings: "1 vaga",
+    description: "A vaga para Professor de Eletrónica e Telecomunicações já foi preenchida e encontra-se encerrada.",
+    status: "Vaga Preenchida",
+    openings: "Vaga encerrada",
+    isClosed: true,
     disciplines: ["Electricidade e Electrónica", "Telecomunicações"],
     responsibilities: [
       "Planificar e leccionar as disciplinas de acordo com o programa curricular.",
@@ -31,6 +32,49 @@ const opportunities = [
       "Competência para leccionar as duas disciplinas.",
       "Boa comunicação, organização e compromisso com a aprendizagem.",
       "Experiência de docência será valorizada.",
+    ],
+  },
+  {
+    id: "professor-portugues-emc",
+    title: "Professor de Língua Portuguesa e E.M.C.",
+    category: "Docência",
+    course: "Ensino Geral",
+    description: "Procuramos um único professor habilitado para leccionar Língua Portuguesa e Educação Moral e Cívica (E.M.C.).",
+    status: "Aberta",
+    openings: "1 vaga",
+    isClosed: false,
+    disciplines: ["Língua Portuguesa", "Educação Moral e Cívica (E.M.C.)"],
+    responsibilities: [
+      "Planificar e leccionar ambas as disciplinas de acordo com os programas curriculares.",
+      "Acompanhar o progresso dos alunos e promover uma aprendizagem participativa.",
+      "Colaborar com a coordenação pedagógica e participar nas actividades escolares.",
+    ],
+    requirements: [
+      "Formação pedagógica ou habilitação adequada para leccionar Língua Portuguesa e E.M.C.",
+      "Capacidade para assegurar as duas disciplinas, conforme as necessidades da instituição.",
+      "Boa comunicação, organização e compromisso com a aprendizagem.",
+      "Experiência de docência será valorizada.",
+    ],
+  },
+  {
+    id: "professores-primeiro-ciclo",
+    title: "Professores para o 1.º Ciclo",
+    category: "Docência",
+    course: "Primeiro Ciclo do Ensino Geral",
+    description: "Recrutamos docentes para leccionar no Primeiro Ciclo do Ensino Geral e acompanhar o desenvolvimento dos alunos nesta etapa fundamental.",
+    status: "Aberta",
+    openings: "Vagas disponíveis",
+    isClosed: false,
+    disciplines: ["Ensino Primário", "Primeiro Ciclo do Ensino Geral"],
+    responsibilities: [
+      "Planificar e leccionar conteúdos adequados ao nível do Primeiro Ciclo.",
+      "Acompanhar o desenvolvimento académico, social e emocional dos alunos.",
+      "Manter uma comunicação colaborativa com encarregados de educação e coordenação.",
+    ],
+    requirements: [
+      "Formação pedagógica adequada para leccionar no Primeiro Ciclo do Ensino Geral.",
+      "Boa comunicação, paciência, organização e compromisso com a aprendizagem.",
+      "Experiência de docência no ensino primário será valorizada.",
     ],
   },
 ]
@@ -71,13 +115,21 @@ function JobDetails({ opportunity }: { opportunity: (typeof opportunities)[numbe
             {opportunity.requirements.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 shrink-0 text-primary" />{item}</li>)}
           </ul>
         </section>
-        <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm leading-6 text-muted-foreground">
-          <strong className="text-foreground">Como candidatar-se:</strong> envie o seu Curriculum Vitae e uma breve apresentação para <a className="font-semibold text-primary underline underline-offset-4" href="mailto:colegioafrilaure@gmail.com?subject=Candidatura%20-%20Professor%20de%20Eletr%C3%B3nica%20e%20Telecomunica%C3%A7%C3%B5es">colegioafrilaure@gmail.com</a>. A candidatura será recebida pela instituição através do correio electrónico oficial.
-        </div>
+        {opportunity.isClosed ? (
+          <div className="rounded-xl border border-muted-foreground/20 bg-muted/50 p-4 text-sm leading-6 text-muted-foreground" role="status">
+            <strong className="text-foreground">Vaga preenchida.</strong> Esta oportunidade foi encerrada e não está a aceitar candidaturas.
+          </div>
+        ) : (
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm leading-6 text-muted-foreground">
+            <strong className="text-foreground">Como candidatar-se:</strong> envie o seu Curriculum Vitae e uma breve apresentação para <a className="font-semibold text-primary underline underline-offset-4" href={`mailto:colegioafrilaure@gmail.com?subject=${encodeURIComponent(`Candidatura - ${opportunity.title}`)}`}>colegioafrilaure@gmail.com</a>. A candidatura será recebida pela instituição através do correio electrónico oficial.
+          </div>
+        )}
       </div>
-      <Button asChild className="w-full sm:w-auto">
-        <a href="mailto:colegioafrilaure@gmail.com?subject=Candidatura%20-%20Professor%20de%20Eletr%C3%B3nica%20e%20Telecomunica%C3%A7%C3%B5es">Enviar candidatura <ArrowRight data-icon="inline-end" /></a>
-      </Button>
+      {!opportunity.isClosed && (
+        <Button asChild className="w-full sm:w-auto">
+          <a href={`mailto:colegioafrilaure@gmail.com?subject=${encodeURIComponent(`Candidatura - ${opportunity.title}`)}`}>Enviar candidatura <ArrowRight data-icon="inline-end" /></a>
+        </Button>
+      )}
     </DialogContent>
   )
 }
@@ -125,7 +177,7 @@ export function CareersPage() {
           {filteredOpportunities.map((opportunity) => (
             <Dialog key={opportunity.id}>
               <Card className="flex h-full flex-col border-border/80 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
-                <CardHeader className="gap-4"><div className="flex items-start justify-between gap-4"><Badge>{opportunity.status}</Badge><span className="text-sm text-muted-foreground">{opportunity.openings}</span></div><div><CardTitle className="text-xl leading-tight">{opportunity.title}</CardTitle><CardDescription className="mt-2">{opportunity.category} · {opportunity.course}</CardDescription></div></CardHeader>
+                <CardHeader className="gap-4"><div className="flex items-start justify-between gap-4"><Badge variant={opportunity.isClosed ? "secondary" : "default"}>{opportunity.status}</Badge><span className="text-sm text-muted-foreground">{opportunity.openings}</span></div><div><CardTitle className="text-xl leading-tight">{opportunity.title}</CardTitle><CardDescription className="mt-2">{opportunity.category} · {opportunity.course}</CardDescription></div></CardHeader>
                 <CardContent className="flex-1"><p className="text-sm leading-6 text-muted-foreground">{opportunity.description}</p></CardContent>
                 <CardFooter><DialogTrigger asChild><Button variant="outline" className="w-full justify-between">Ver detalhes <ChevronRight data-icon="inline-end" /></Button></DialogTrigger></CardFooter>
               </Card>
