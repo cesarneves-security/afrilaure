@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { ChevronDown, ChevronUp, ImagePlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { MediaItem } from "./media-lightbox"
 
@@ -82,47 +82,52 @@ export default function ActivitySection({
           {visibleMedia.map((item, index) => (
             <div
               key={item.id}
-              className="group relative overflow-hidden rounded-lg aspect-square bg-muted cursor-pointer"
-              onClick={() => onMediaClick(index)}
+              className={`group relative overflow-hidden rounded-lg aspect-square bg-muted ${item.isPlaceholder ? "cursor-default" : "cursor-pointer"}`}
+              onClick={item.isPlaceholder ? undefined : () => onMediaClick(index)}
             >
-              {/* Image/Video Thumbnail */}
-              {item.type === "image" ? (
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                />
+              {item.isPlaceholder ? (
+                <div className="flex h-full flex-col items-center justify-center gap-3 border border-dashed border-primary/30 bg-primary/5 p-5 text-center text-muted-foreground">
+                  <ImagePlus aria-hidden="true" className="size-8 text-primary/70" />
+                  <div>
+                    <p className="font-semibold text-foreground">{item.title}</p>
+                    <p className="mt-1 text-sm">Adicionar imagem do evento</p>
+                  </div>
+                </div>
               ) : (
                 <>
-                  <video
-                    src={item.src}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
-                    <svg
-                      className="w-12 h-12 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+                  {item.type === "image" ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <>
+                      <video
+                        src={item.src}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
+                        <svg
+                          className="w-12 h-12 text-white"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="font-semibold text-sm line-clamp-2">{item.title}</h3>
+                    {item.date && (
+                      <p className="text-xs text-gray-300 mt-1">{item.date}</p>
+                    )}
                   </div>
                 </>
               )}
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              {/* Title Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="font-semibold text-sm line-clamp-2">
-                  {item.title}
-                </h3>
-                {item.date && (
-                  <p className="text-xs text-gray-300 mt-1">{item.date}</p>
-                )}
-              </div>
             </div>
           ))}
         </div>

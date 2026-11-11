@@ -14,6 +14,7 @@ export interface MediaItem {
   date?: string
   category: string
   alt: string
+  isPlaceholder?: boolean
 }
 
 interface MediaLightboxProps {
