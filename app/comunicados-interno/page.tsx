@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
 const comunicado = {
@@ -39,7 +38,6 @@ const comunicado = {
 export default function ComunicadosInternoPage() {
   return (
     <main className="min-h-screen bg-muted/20">
-      <Header />
       <div className="container mx-auto flex max-w-5xl flex-col gap-8 px-4 pb-20 pt-32">
         <div className="flex flex-col gap-4">
           <Button asChild variant="ghost" className="w-fit px-0"><Link href="/"><ArrowLeft data-icon="inline-start" />Voltar ao início</Link></Button>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { CareersPage } from "@/components/careers-page"
 import { Footer } from "@/components/footer"
-import { Header } from "@/components/header"
 
 export const metadata: Metadata = {
   title: "Recrutamento | Afrilaure",
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 export default function RecruitmentPage() {
   return (
     <>
-      <Header />
       <CareersPage />
       <Footer />
     </>

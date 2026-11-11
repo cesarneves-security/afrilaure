@@ -19,22 +19,22 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Links Rápidos</h3>
             <ul className="space-y-2 text-primary-foreground/80">
               <li>
-                <a href="#inicio" className="hover:text-primary-foreground transition-colors">
+                <a href="/#inicio" className="hover:text-primary-foreground transition-colors">
                   Início
                 </a>
               </li>
               <li>
-                <a href="#sobre" className="hover:text-primary-foreground transition-colors">
+                <a href="/#sobre" className="hover:text-primary-foreground transition-colors">
                   Sobre
                 </a>
               </li>
               <li>
-                <a href="#cursos" className="hover:text-primary-foreground transition-colors">
+                <a href="/#cursos" className="hover:text-primary-foreground transition-colors">
                   Cursos
                 </a>
               </li>
               <li>
-                <a href="#precos" className="hover:text-primary-foreground transition-colors">
+                <a href="/#precos" className="hover:text-primary-foreground transition-colors">
                   Preços
                 </a>
               </li>
@@ -44,7 +44,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#transportes" className="hover:text-primary-foreground transition-colors">
+                <a href="/#transportes" className="hover:text-primary-foreground transition-colors">
                   Transportes
                 </a>
               </li>
