@@ -212,12 +212,12 @@ const activitySections = [
       return {
         id: `rosa-${photoNumber}`,
         type: "image" as const,
-        src: "",
-        title: `Fotografia ${photoNumber} — Outubro Rosa`,
-        description: "Espaço reservado para uma fotografia da campanha Outubro Rosa.",
+        src: `/outubro-rosa/outubro-rosa-${photoNumber}.png`,
+        title: `Imagem provisória ${photoNumber} — Outubro Rosa`,
+        description: "Imagem ilustrativa provisória. Substitua-a pela fotografia real do evento.",
+        date: "Outubro de 2026",
         category: "Outubro Rosa",
-        alt: `Espaço reservado para fotografia ${photoNumber} do evento Outubro Rosa`,
-        isPlaceholder: true,
+        alt: `Imagem ilustrativa provisória ${photoNumber} da campanha Outubro Rosa`,
       }
     }),
   },
