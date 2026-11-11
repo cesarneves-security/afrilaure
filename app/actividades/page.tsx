@@ -200,6 +200,27 @@ const activitySections = [
       }
     ],
   },
+  {
+    id: "outubro-rosa",
+    title: "Outubro Rosa – Conscientização e Prevenção do Cancro da Mama.",
+    description:
+      "O Outubro Rosa lembra-nos que a sensibilização, a prevenção e o diagnóstico precoce são fundamentais na luta contra o cancro da mama. Ao partilhar informação e incentivar o cuidado com a saúde, podemos ajudar a salvar vidas. Alunos, professores e funcionários uniram-se nesta campanha para promover a consciencialização e apoiar uma comunidade mais informada e solidária.",
+    icon: "🎗️",
+    category: "Conscientização",
+    media: Array.from({ length: 10 }, (_, index) => {
+      const photoNumber = String(index + 1).padStart(2, "0")
+      return {
+        id: `rosa-${photoNumber}`,
+        type: "image" as const,
+        src: "",
+        title: `Fotografia ${photoNumber} — Outubro Rosa`,
+        description: "Espaço reservado para uma fotografia da campanha Outubro Rosa.",
+        category: "Outubro Rosa",
+        alt: `Espaço reservado para fotografia ${photoNumber} do evento Outubro Rosa`,
+        isPlaceholder: true,
+      }
+    }),
+  },
   /* Actividades adicionais removidas conforme solicitado. */
   /*
   {
@@ -415,6 +436,7 @@ const activitySections = [
 const categories = [
   { id: "defesas", label: "Defesas de Cursos", icon: "🎓" },
   { id: "eventos", label: "Eventos Escolares", icon: "🎉" },
+  { id: "outubro-rosa", label: "Outubro Rosa", icon: "🎗️" },
 ]
 
 export default function ActivitiesPage() {
