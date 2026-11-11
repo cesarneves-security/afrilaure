@@ -4,7 +4,6 @@ import { useState, useMemo } from "react"
 import MediaLightbox from "@/components/media-lightbox"
 import ActivitySearchFilter from "@/components/activity-search-filter"
 import ActivitySection from "@/components/activity-section"
-import type { MediaItem } from "@/components/media-lightbox"
 
 // Extended media data with all items for each section
 const activitySections = [
@@ -207,19 +206,88 @@ const activitySections = [
       "O Outubro Rosa lembra-nos que a sensibilização, a prevenção e o diagnóstico precoce são fundamentais na luta contra o cancro da mama. Ao partilhar informação e incentivar o cuidado com a saúde, podemos ajudar a salvar vidas. Alunos, professores e funcionários uniram-se nesta campanha para promover a consciencialização e apoiar uma comunidade mais informada e solidária.",
     icon: "🎗️",
     category: "Conscientização",
-    media: Array.from({ length: 10 }, (_, index) => {
-      const photoNumber = String(index + 1).padStart(2, "0")
-      return {
-        id: `rosa-${photoNumber}`,
+    media: [
+      {
+        id: "rosa-01",
         type: "image" as const,
-        src: `/outubro-rosa/outubro-rosa-${photoNumber}.png`,
-        title: `Imagem provisória ${photoNumber} — Outubro Rosa`,
-        description: "Imagem ilustrativa provisória. Substitua-a pela fotografia real do evento.",
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794401155206.png-WLi1oFESQzzT4cWXQqRZwvn5DEnKcr.jpeg",
+        title: "Abertura da campanha Outubro Rosa",
+        description: "Comunidade escolar reunida no recinto do Instituto.",
         date: "Outubro de 2026",
         category: "Outubro Rosa",
-        alt: `Imagem ilustrativa provisória ${photoNumber} da campanha Outubro Rosa`,
-      }
-    }),
+        alt: "Alunos, professores e funcionários reunidos no pátio escolar para a campanha Outubro Rosa.",
+      },
+      {
+        id: "rosa-02",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794401544005.png-kJdeqlx8auQBolAZN6azXNQs9Pbso3.jpeg",
+        title: "Apresentação cultural da campanha",
+        description: "Participantes apresentam uma dança durante a actividade.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Participantes dançam no pátio escolar durante a campanha Outubro Rosa.",
+      },
+      {
+        id: "rosa-03",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794400976135.png-ZvUJh1888ZbdKG46AzSozRHNH4wS46.jpeg",
+        title: "Encontro de sensibilização",
+        description: "Alunos e membros da comunidade acompanham a actividade.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Público sentado e a acompanhar a campanha Outubro Rosa no recinto escolar.",
+      },
+      {
+        id: "rosa-04",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794402086733.png-JPb4BTFSLhqBZGu871vaUgaatDXbWa.jpeg",
+        title: "Participação da comunidade escolar",
+        description: "Estudantes e funcionários participam na campanha de consciencialização.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Comunidade escolar reunida durante a campanha de consciencialização Outubro Rosa.",
+      },
+      {
+        id: "rosa-05",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794401069187.png-PvSMb7xfAXkSAIPkivV6hDYvtWtphn.jpeg",
+        title: "Momento cultural no pátio",
+        description: "Apresentação de dança integrada na programação da campanha.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Participantes apresentam uma dança diante da comunidade escolar durante o Outubro Rosa.",
+      },
+      {
+        id: "rosa-06",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794402333642.png-wK1P13m6CSUaphZl7Jy0SrwnAogunp.jpeg",
+        title: "Professoras do Curso de Saúde na campanha Outubro Rosa",
+        description: "Professoras do Curso de Saúde vestem camisolas da campanha de prevenção.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Duas professoras do Curso de Saúde com camisolas cor-de-rosa da campanha Outubro Rosa no recinto escolar.",
+      },
+      {
+        id: "rosa-07",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794402254739.png-FQyiqR1b5lXIu5ctE7kznz3AYON4cm.jpeg",
+        title: "Actividade de sensibilização",
+        description: "A comunidade acompanha a programação da campanha no pátio.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Alunos e funcionários acompanham uma actividade Outubro Rosa no pátio da escola.",
+      },
+      {
+        id: "rosa-08",
+        type: "image" as const,
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KOLORO_1794402149903.png-enudThR4DpZob6AbFwEODEUEmLPhAp.jpeg",
+        title: "Celebração da campanha",
+        description: "Registo dos participantes durante o encontro de consciencialização.",
+        date: "Outubro de 2026",
+        category: "Outubro Rosa",
+        alt: "Participantes reunidos no recinto escolar durante o evento Outubro Rosa.",
+      },
+    ],
   },
   /* Actividades adicionais removidas conforme solicitado. */
   /*
@@ -446,11 +514,6 @@ export default function ActivitiesPage() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
   const [currentSection, setCurrentSection] = useState(0)
 
-  // Flatten all media items for lightbox navigation
-  const allMediaItems: MediaItem[] = useMemo(() => {
-    return activitySections.flatMap((section) => section.media)
-  }, [])
-
   // Filter sections and media based on search and category
   const filteredSections = useMemo(() => {
     return activitySections
@@ -471,14 +534,7 @@ export default function ActivitiesPage() {
   }, [searchQuery, selectedCategory])
 
   const handleMediaClick = (sectionIndex: number, mediaIndex: number) => {
-    // Calculate the global index in the flattened array
-    let globalIndex = 0
-    for (let i = 0; i < sectionIndex; i++) {
-      globalIndex += filteredSections[i].media.length
-    }
-    globalIndex += mediaIndex
-
-    setCurrentMediaIndex(globalIndex)
+    setCurrentMediaIndex(mediaIndex)
     setCurrentSection(sectionIndex)
     setLightboxOpen(true)
   }
