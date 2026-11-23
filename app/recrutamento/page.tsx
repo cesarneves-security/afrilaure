@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
   title: "Recrutamento | Afrilaure",
-  description: "Conheça as oportunidades profissionais e faça parte do Instituto Politécnico Privado Afrilaure.",
+  description: "Consulte as oportunidades abertas e os contactos oficiais de recrutamento do Instituto Politécnico Privado Afrilaure.",
 }
 
 export default function RecruitmentPage() {
